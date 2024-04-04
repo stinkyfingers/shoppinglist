@@ -22,20 +22,34 @@ data "aws_iam_policy_document" "cloudfront" {
         "cloudfront.amazonaws.com"
       ]
     }
-
     actions = [
       "s3:GetObject"
     ]
     effect = "Allow"
-
     resources = [
       "arn:aws:s3:::${var.project}.${var.domain}/*"
     ]
     condition {
       test = "StringEquals"
       variable = "AWS:SourceArn"
-      values = ["${aws_cloudfront_distribution.distribution.arn}"]
+      values = [aws_cloudfront_distribution.distribution.arn]
     }
+  }
+  statement {
+    sid = "Cloudfront Read Access"
+    principals {
+      type        = "AWS"
+      identifiers = [
+        aws_cloudfront_origin_access_identity.oai.iam_arn
+      ]
+    }
+    actions = [
+      "s3:GetObject"
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:s3:::${var.project}.${var.domain}/*"
+    ]
   }
 }
 
