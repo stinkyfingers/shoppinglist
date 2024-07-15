@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ShoppingList",
+  "name": "Do your shopping from a list",
   "icons": [
     {
       "src": "favicon.ico",
